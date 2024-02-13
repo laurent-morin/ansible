@@ -1,0 +1,26 @@
+# Copyright (C) 2023, RTE (http://www.rte-france.com)
+# SPDX-License-Identifier: Apache-2.0
+
+---
+- name: Create and start VMs
+  hosts: "node1"
+  gather_facts: false
+  become: true
+  tasks:
+    - name: "What is item : {{item  }}"
+      debug:
+        var: "hostvars[item]"
+        #xml: >-
+        #  {{ lookup('template',
+        #  hostvars[item].vm_template,
+        #  template_vars=dict(vm=hostvars[item])) }}
+      with_items: "{{ groups['VMs'] }}"
+    - name: "What is item : {{item  }}"
+      debug:
+        msg: >-
+          {{ lookup('template',
+          hostvars[item].vm_template,
+          template_vars=dict(vm=hostvars[item])) }}
+      with_items: "{{ groups['VMs'] }}"
+
+

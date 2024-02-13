@@ -55,7 +55,7 @@
   hosts:
     - cluster_machines
     - standalone_machine
-    - VMs
+    #- VMs
   vars_files:
     - ../vars/network_vars.yml
   roles:
@@ -65,7 +65,7 @@
   hosts:
     - cluster_machines
     - standalone_machine
-    - VMs
+    #- VMs
   become: true
   vars:
     apply_config: "{{ apply_network_config | default(false) }}"
@@ -110,7 +110,7 @@
 - name: Configure hosts and hostname
   hosts:
     - standalone_machine
-    - VMs
+    #- VMs
   become: true
   tasks:
     - name: Set hostname
@@ -132,7 +132,7 @@
   hosts:
     - cluster_machines
     - standalone_machine
-    - VMs
+    #- VMs
   become: true
   tasks:
     - block:
@@ -223,7 +223,7 @@
   hosts:
     - cluster_machines
     - standalone_machine
-    - VMs
+    #- VMs
   become: true
   tasks:
     - name: stop and disable chrony
@@ -236,7 +236,7 @@
   hosts:
     - cluster_machines
     - standalone_machine
-    - VMs
+    #- VMs
   become: true
   tasks:
     - name: Set observer IP address in /etc/syslog-ng/syslog-ng.conf
@@ -298,7 +298,7 @@
   hosts:
     - cluster_machines
     - standalone_machine
-    - VMs
+    #- VMs
   become: true
   tasks:
     - block:

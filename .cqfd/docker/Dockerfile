@@ -28,7 +28,7 @@ RUN set -x \
         rstcheck \
         rsync \
         ruby-asciidoctor-pdf \
-        ssh \
+        ssh sshpass\
         vim \
         yamllint \
     && sed -i "s/# en_US\.UTF-8 UTF-8/en_US\.UTF-8 UTF-8/" /etc/locale.gen \

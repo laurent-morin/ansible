@@ -1,0 +1,18 @@
+# Copyright (C) 2023, RTE (http://www.rte-france.com)
+# SPDX-License-Identifier: Apache-2.0
+
+---
+- name: Create and start VMs
+  hosts: "node1"
+  gather_facts: false
+  become: true
+  tasks:
+    - name: "Clone VM {{ item }} from {{ hostvars[item].clone_from  }}"
+      cluster_vm:
+        name: "{{ item }}"
+        command: "{{ hostvars[item].action }}"
+      with_items: "{{ groups['VMs'] }}"
+      register: status
+    - name: "Status"
+      debug:
+        var: status

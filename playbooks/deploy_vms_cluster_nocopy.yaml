@@ -1,0 +1,30 @@
+# Copyright (C) 2023, RTE (http://www.rte-france.com)
+# SPDX-License-Identifier: Apache-2.0
+
+---
+- name: Create and start VMs
+  hosts: "node1"
+  gather_facts: false
+  become: true
+  vars:
+    - disk_copy: true
+  tasks:
+    - name: "Create VM"
+      cluster_vm:
+        name: "{{ item }}"
+        command: create
+        system_image: "{{ hostvars[item].vm_image_path }}"
+        force: true
+        live_migration: true
+        migration_user: "{{ livemigration_user }}"
+        enable: true
+        pinned_host: "{{ hostvars[item].pinned_host | default(None) }}"
+        preferred_host: "{{ hostvars[item].preferred_host | default(None) }}"
+        crm_config_cmd: "{{ hostvars[item].crm_config_cmd | default(omit) }}"
+        xml: >-
+          {{ lookup('template',
+          hostvars[item].vm_template,
+          template_vars=dict(vm=hostvars[item])) }}
+      with_items: "{{ groups['VMs'] }}"
+      when: hostvars[item].action=="create"
+
